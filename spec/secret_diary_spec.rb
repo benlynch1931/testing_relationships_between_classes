@@ -55,14 +55,14 @@ RSpec.describe SecretDiary do
 
     context "Works when @unlocked" do
       before do
-        allow(diary).to receive(:read).and_return("I Read the diary!")
         allow(diary).to receive(:write).and_return("I wrote to the diary!")
+        allow(diary).to receive(:read).and_return(diary.write)
       end
 
       it "gets read" do
         subject = SecretDiary.new(diary)
         subject.unlock
-        expect(subject.read).to eq("I Read the diary!")
+        expect(subject.read).to eq("I wrote to the diary!")
       end
       it "gets written" do
         subject = SecretDiary.new(diary)
